@@ -26,17 +26,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $songs = DB::table('songs_metadata_file')->paginate(15);
+        $songs = DB::table('songs_metadata_file')->inRandomOrder('1234')->paginate(15);
         return view('home', ['songs' => $songs]);
     }
-    public function insert(Request $request){
-        foreach($requests as $song) {
-            if(isset($_POST['cb'])) {
-                $song_id = $request->ajax('song_id');
-                // $city_name = $request->input('city_name');
-                $data=array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
-                DB::table('triplets_file')->insert($data);
-                }
-        }
+    public function store(Request $request){
+        //$song = $request->all();
+        //$song_id = $song['song_id'];
+        // $this->validate($request, [
+        //     'song_id' => 'required',
+        // ]);
+        //$data = array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
+        //DB::table('triplets_file')->insert($data);
+
+        $song_id = $request->ajax('song_id');
+        $data=array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
+        DB::table('triplets_file')->insert($data);
+                
+        // $song_id = $request->input('song_id');
+        // $data = array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
+        // DB::table('triplets_file')->insert($data);
+        // }
+            
     }
 }

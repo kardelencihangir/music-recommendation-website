@@ -29,8 +29,7 @@
                             <tr>
                             <td name='title'>{{$song->title}}</td>
                             <td name='artist'>{{$song->artist_name}}</td>
-                            <td name='song_id'>{{$song->song_id}}</td>
-                            <td><input type="checkbox" id="cb" name="cb">
+                            <td><input type="radio" name="song_id" value="{{$song->song_id}}"> <label>{{$song->song_id}}</label></td>
                             </tr>
                             @endforeach
                         </tbody>

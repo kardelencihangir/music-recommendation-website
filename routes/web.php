@@ -20,4 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home', 'HomeController@insert')->name('home');
+Route::get('insert', 'HomeController@insertform');
+Route::post('/home', 'HomeController@store')->name('home');
