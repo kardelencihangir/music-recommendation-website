@@ -37,11 +37,15 @@ class HomeController extends Controller
         // ]);
         //$data = array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
         //DB::table('triplets_file')->insert($data);
-
-        $song_id = $request->ajax('song_id');
-        $data=array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
-        DB::table('triplets_file')->insert($data);
-                
+        $song = $request->all();
+        $id = $song['song_id'];
+        //$song_id = $request->ajax('song_id');
+        //$data=array('user_id'=>1, 'song_id'=>$id, 'listen_count'=>1);
+        //dd($data);
+        DB::table('triplets_file')->insert(
+            ['user_id' => 1, 'song_id' => $id, 'listen_count'=> 1]);
+        
+            return $this->index();
         // $song_id = $request->input('song_id');
         // $data = array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
         // DB::table('triplets_file')->insert($data);
