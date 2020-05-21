@@ -42,8 +42,12 @@ class HomeController extends Controller
         //$song_id = $request->ajax('song_id');
         //$data=array('user_id'=>1, 'song_id'=>$id, 'listen_count'=>1);
         //dd($data);
+        //$user = DB::table('users')->first();
+        $user = auth()->user();
+        //dd($user->id);
+        //dd($user->id);
         DB::table('triplets_file')->insert(
-            ['user_id' => 1, 'song_id' => $id, 'listen_count'=> 1]);
+            ['user_id' => $user->id, 'song_id' => $id, 'listen_count'=> 1]);
         
             return $this->index();
         // $song_id = $request->input('song_id');
