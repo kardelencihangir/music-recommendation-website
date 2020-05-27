@@ -37,7 +37,7 @@ class HomeController extends Controller
         // ]);
         //$data = array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
         //DB::table('triplets_file')->insert($data);
-        $song = $request->all();
+            $song = $request->all();
         $id = $song['song_id'];
         //$song_id = $request->ajax('song_id');
         //$data=array('user_id'=>1, 'song_id'=>$id, 'listen_count'=>1);
@@ -49,11 +49,15 @@ class HomeController extends Controller
         DB::table('triplets_file')->insert(
             ['user_id' => $user->id, 'song_id' => $id, 'listen_count'=> 1]);
         
-            return $this->index();
+            return redirect('/home');
         // $song_id = $request->input('song_id');
         // $data = array('user_id'=>1, 'song_id'=>$song_id, 'listen_count'=>1);
         // DB::table('triplets_file')->insert($data);
         // }
+
+        // $songs = json_decode(file_get_contents('http://localhost:5000/predict'), true);
+        // return view('songslist', ['songs' => $songs]);
+        //return $this->index();
             
     }
 }
