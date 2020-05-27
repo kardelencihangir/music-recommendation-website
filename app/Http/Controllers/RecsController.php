@@ -14,8 +14,8 @@ class RecsController extends Controller
     public function index()
     {
         $auth = auth()->user();
-        $auth_id = $auth->id;
-        json_encode($auth_id); // burada recs rotasında ilk olarak bu çalışıp auth'un id'sini yayınlıyor.
+        $json_auth = json_decode($auth, true); // burada recs rotasında ilk olarak bu çalışıp auth'un id'sini yayınlıyor.
+        return $json_auth;
         // $songs = json_decode(file_get_contents('http://localhost:5000/predict'), true);
         // return view('recs', ['songs' => $songs]);
     }

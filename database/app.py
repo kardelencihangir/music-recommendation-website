@@ -19,6 +19,7 @@ from wtforms.validators import DataRequired
 import sqlite3 
 from sqlite3 import Error
 import database 
+import requests
 
 
 
@@ -34,16 +35,6 @@ with open('model.pkl', 'rb') as f:
 with open('model_columns.pkl', 'rb') as f:
    model_columns = pickle.load (f)
  
-@app.route('/id/<id>', methods=['POST','GET'])
-def getusers(id):
-   
-
-    import Musics as music
-    userid = id
-    Sonuc =  music.Musicrec(userid)
-   
-    return render_template('list.html', Sonuc = Sonuc)
-
 
 @app.route('/')
 def welcome():
@@ -53,38 +44,25 @@ def welcome():
 def users():
    return "users"
  
-@app.route('/predict', methods=['POST','GET'])
-def predict():
-    
-  
-    if flask.request.method == 'GET':
-          
-           
-           return jsonify(classifier)
-           
-           #return jsonify(classifier) #array olarak gözüküyor 
-           
-    
-    if flask.request.method == 'POST':
-       try:
-      
-           json_ = request.json
-           print(json_)
-           query_ = pd.get_dummies(pd.DataFrame(json_))
-           #senin istediğin veriler columns yerine gelicek
-           query = query_.reindex(columns = model_columns, fill_value= 0)
-           #listeyi yine sen belirliyceksin
-           prediction = list(classifier.predict(query))
-           
-           return jsonify({
-               "prediction":str(prediction)
-           })
-         
-       except:
-           return jsonify({
-               "trace": traceback.format_exc()
-               })
+@app.route("/json", methods=["POST"])
+def json_example():
 
+    if request.is_json:
+
+        req = request.get_json()
+
+        response_body = {
+            "message": "JSON received!",
+            "sender": req.get("name")
+        }
+
+        res = make_response(jsonify(response_body), 200)
+
+        return res
+
+    else:
+
+        return make_response(jsonify({"message": "Request body must be JSON"}), 400)
     
     
     #kendi admin sayfamı sonra düzenliyebilirim
@@ -191,13 +169,12 @@ def validatetime(username):#, password):
                     
                         #kayıt yoksa false gönderiyor completion ile
     return completion
- 
-
-
 
     
 if __name__ == '__main__': 
-   
 
-   
-    app.run()   
+    user_id = requests.get('http://127.0.0.1:8000/recs').json()
+    print(user_id)
+    app.run()
+    
+    #print(Sonuc)

@@ -23,3 +23,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Route::get('insert', 'HomeController@insertform');
 Route::post('/home', 'HomeController@store')->name('store');
 Route::get('/recs', 'RecsController@index')->name('recs');
+Route::post('/recs', 'RecsController@index')->name('recs');
